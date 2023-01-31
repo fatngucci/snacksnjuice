@@ -1,0 +1,107 @@
+{% extends 'home.html' %}
+{% load django_template_maths %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Snacks/snacks_style.css' %}">
+{% endblock %}
+
+{% block title %}Shopping cart{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="container-fluid bg-warning p-2">
+            <div class="text-center">
+                <div class="display-3 my-2 text-white">Shopping cart</div>
+                <br class="my-2">
+                {% if shopping_cart_is_empty %}
+                    <h2>Your shopping cart is empty.</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button class="border rounded btn-outline-primary px-3 py-2 my-5" type="submit" name="back">
+                            <h2>Take some snacks</h2>
+                        </button>
+                    </form>
+                {% else %}
+                    <div class="row container mx-auto align-items-center p-2" style="position:sticky;top:0px; background:#ffc107;z-index: 1; color:white">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col my-auto" style="font-size:2.5rem">item</div>
+                                <div class="col my-auto" style="font-size:2.5rem">quantity</div>
+                                <div class="col my-auto" style="font-size:2.5rem">amount</div>
+                            </div>
+                        </div>
+                        <div class="col-4 my-auto" style="font-size:2.5rem">total</div>
+                    </div>
+                    <div class="row container mx-auto">
+                        <div class="col-8">
+                            {% for item in shopping_cart_items %}
+                                <!--
+                        <div class="border rounded bg-white mx-auto my-4 p-5 w-25">
+                            <a href="{% url 'snack-detail' item.produkt_id %}">
+                                <img src="{{ item.get_snack.bilder.url }}" height="150" width="150">
+                                <h5>{{ item.produkt_name }}</h5>
+                            </a>
+                            <h6>{{ item.preis }} € x{{ item.menge }}</h6>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" id="produkt_id" name="produkt_id" value="{{ item.id }}">
+                                <button class="border rounded btn-outline-primary px-3 py-2" name="plus">+</button>
+                                <button class="border rounded btn-outline-danger px-3 py-2" name="minus">-</button>
+                            </form>
+                        </div>
+                        <br>
+                        -->
+
+                                <div class="row align-items-center">
+                                    <div class="col border rounded bg-white mx-auto my-2 p-3 w-25">
+                                        <a href="{% url 'snack-detail' item.produkt_id %}">
+                                            <img src="{{ item.get_snack.bilder.url }}" height="100" width="100">
+                                            <h5>{{ item.produkt_name }}</h5>
+                                        </a></div>
+                                    <div class="col m-auto"><h4>{{ item.preis }} € x {{ item.menge }}</h4>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" id="produkt_id" name="produkt_id"
+                                                   value="{{ item.id }}">
+                                            <button class="border rounded btn-outline-primary px-3 py-2" name="plus">+
+                                            </button>
+                                            <button class="border rounded btn-outline-danger px-3 py-2" name="minus">-
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="col m-auto" style="font-size:2.5rem">{{ item.preis|mul:item.menge }} €</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-4">
+                            <div class="my-5 display-4" style="position:sticky;top: 350px">{{ total }} €</div>
+                        </div>
+                    </div>
+
+
+                    <br><br>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button class="border rounded btn-outline-danger px-3 py-2" type="submit" name="empty">Empty
+                            the shopping cart
+                        </button>
+                        <button class="border rounded btn-outline-success px-3 py-2" type="submit" name="pay">Pay
+                            with credit card
+                        </button>
+                        <button class="border rounded btn-outline-primary px-3 py-2" type="submit" name="back">
+                            Browse more snacks!
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        </div>
+        <!--<a href="{% url 'snack-list' %}">Back to the snacks</a>-->
+
+    {% else %}
+        <div><h3 class="text-center"><a href="{% url 'login' %}">Login</a> to access the shopping cart</h3>
+        <div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block title %}Users list{% endblock %}
+
+{% block content %}
+    <div class="container my-2 py-2">
+        <div class="display-3 my-2 text-center">Users list</div>
+        <div class="row align-items-center my-5">
+            {% for myuser in all_myusers %}
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                    <div class="card m-2 p-4" style="height: 22rem">
+                        <img class="card-img-top" src="{{ myuser.profile_picture.url }}" height="150" width="150"><br>
+                        <div class="card-body">
+                            <p>Name: {{ myuser.first_name }} {{ myuser.last_name }}</p>
+                            <small>DoB: {{ myuser.date_of_birth }}</small>
+                            <a href="{{ myuser.some_file.url }}"><small>uploaded file</small></a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer class="container-fluid bg-warning" style="height: 60px;">
+        <div class="container text-center p-1" style="max-width: 680px;">
+            <span class="text-muted"> made by </span>
+            <br>
+            <span class="text-muted"> Jonathan Harsono & Taro Anklam </span>
+        </div>
+    </footer>
+{% endblock %}

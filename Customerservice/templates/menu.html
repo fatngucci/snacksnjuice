@@ -1,0 +1,82 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Customer Service{% endblock %}
+
+{% block content %}
+    {% block logged_in_content %}
+        <div class="text-center container py-4 my-auto">
+            <div class="display-3 my-2">Customer service</div>
+            {% if not can_delete %}
+                You are not authorized.<br><br>
+            {% else %}
+                <!--
+                <div class="my-5">
+                    <p><a href="{% url 'snack-manage' %}">
+                        <button class="border rounded btn-outline-dark px-3 py-2">Manage snacks</button>
+                    </a></p>
+                    <p><a href="{% url 'comment-manage' %}">
+                        <button class="border rounded btn-outline-dark px-3 py-2">Manage comments</button>
+                    </a></p>
+                    <p><a href="{% url 'myuser-list' %}">
+                        <button class="border rounded btn-outline-dark px-3 py-2">Manage users</button>
+                    </a></p>
+                </div>
+                -->
+
+                <div class="row mx-auto d-flex justify-content-between my-5" id="home-cards">
+
+                    <a href="{% url 'comment-manage' %}" id="home-links">
+                        <div class="card p-2 pt-4 mt-5">
+                            <img class="card-img-top" style="width: 18rem;" id="img{{ snack.id }}"
+                                 src="{% static 'Snacks/65-657175_comment-png.png' %}" height="150"
+                                 width="150">
+                            <div class="text-center mt-3">
+                                <div class="card-title" id="a{{ snack.id }}">
+                                    <h3>comments</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'snack-manage' %}" id="home-links">
+                        <div class="card p-2 pt-4 mt-5">
+                            <img class="card-img-top" style="width: 18rem;" id="img{{ snack.id }}"
+                                 src="{% static 'Snacks/pngwing.com.png' %}" height="150" width="150">
+                            <div class="text-center mt-3">
+                                <div class="card-title" id="a{{ snack.id }}">
+                                    <h3>snacks</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'myuser-list' %}" id="home-links">
+                        <div class="card p-2 pt-4 mt-5">
+                            <img class="card-img-top" style="width: 18rem; border-radius: 100px;"
+                                 src="{% static 'Snacks/logi.png' %}" height="150" width="150">
+                            <div class="text-center mt-3">
+                                <div class="card-title" id="a{{ snack.id }}">
+                                    <h3>users</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            {% endif %}
+        </div>
+
+
+    {% endblock %}
+{% endblock %}
+
+{% block footer %}
+    <footer class="container-fluid bg-warning" style="height: 60px; position: absolute; bottom: 0;">
+        <div class="container text-center p-1" style="max-width: 680px;">
+            <span class="text-muted"> made by </span>
+            <br>
+            <span class="text-muted"> Jonathan Harsono & Taro Anklam </span>
+        </div>
+    </footer>
+{% endblock %}

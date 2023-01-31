@@ -1,0 +1,59 @@
+{% extends 'home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Snacks/snacks_style.css' %}">
+{% endblock %}
+
+{% block title %}Add snack{% endblock %}
+
+{% block content %}
+    <div class="text-center container py-4 my-auto">
+        {% block logged_in_content %}
+            {% if can_delete %}
+                <div class="display-4 text-center text-white bg-warning mb-3 py-3 border">Add snack</div>
+                <form class="mx-auto" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% crispy form %}
+
+                    <!--
+                    <label>Name:</label>
+                    <input type="text" name="name"><br><br>
+
+                    <label>Gewicht:</label>
+                    <input type="number" name="gewicht"><br><br>
+
+                    <label>Beschreibung:</label>
+                    <input type="text" name="beschreibung"><br><br>
+
+                    <label>Artikelnummer:</label>
+                    <input type="text" name="artikelnummer"><br><br>
+
+                    <label>Preis:</label>
+                    <input type="number" name="preis"><br><br>
+
+                    <label>Foto:</label>
+                    <input type="file" name="bilder" accept="image/*"><br><br>
+
+                    <label>Produktinfo:</label>
+                    <input type="file" name="produkt_info" accept="application/pdf"><br><br>
+
+                    <br><br>
+
+                    <button type="submit">Add snack</button>
+                    -->
+
+                </form>
+            {% else %}
+                You are not authorized!
+            {% endif %}
+        {% endblock %}
+
+    </div>
+{% endblock %}
+
+{% block not_logged_in_content %}
+    <p>You must log in to add a snack</p>
+    <a href="{% url 'login' %}">Login</a>
+{% endblock %}

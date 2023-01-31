@@ -1,0 +1,15 @@
+body {
+    background-color: white;
+}
+
+img {
+    object-fit: scale-down;
+}
+
+* {
+    font-family: "Helvetica Rounded";
+}
+
+.asteriskField {
+    display: none;
+}

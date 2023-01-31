@@ -1,0 +1,108 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Comment manage{% endblock %}
+
+{% block content %}
+    <div class="container py-4 my-auto">
+        {% if user.is_authenticated %}
+            <div class="display-3 my-2 text-center">Manage comments</div>
+            {% if not can_delete %}
+                You are not authorized to manage comments.<br><br>
+            {% else %}
+                <div class="col-12 my-5">
+                    <div class="w-75 mx-auto">
+                        <div class="row mx-auto">
+                            {% if delete_button_clicked %}
+                                <div class="col-12">
+                                    <div class="card m-1">
+                                        <div class="card-body">
+                                            <p>text: <a
+                                                    href="{% url 'snack-detail' the_comment.snack.id %}"><b>{{ the_comment.text }}</b></a>
+                                            </p>
+                                            <p>rating: {{ the_comment.sternbewertung }}</p>
+                                            <p>by: {{ the_comment.poster.username }}</p>
+                                            <p>reports:
+                                                {{ the_comment.get_reports_count }}</p>
+                                        </div>
+                                        {% if can_delete %}
+                                            <div class="card-footer">
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" id="comment_id" name="comment_id"
+                                                           value="{{ the_comment.id }}">
+                                                    <p><b>Are you sure?</b></p>
+                                                    <button class="border rounded btn-outline-danger px-3 py-2"
+                                                            type="submit" name="yes">Delete
+                                                    </button>
+                                                    <button class="border rounded btn-outline-dark px-3 py-2 ml-auto"
+                                                            type="submit" name="no">Cancel
+                                                    </button>
+
+                                                </form>
+                                            </div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% else %}
+
+
+                                {% for comment in all_the_comments %}
+                                    <div class="col-12">
+                                        <div class="card m-1">
+                                            <div class="card-body">
+                                                <p>text: <a
+                                                        href="{% url 'snack-detail' comment.snack.id %}"><b>{{ comment.text }}</b></a>
+                                                </p>
+                                                <p>rating: {{ comment.sternbewertung }}</p>
+                                                <p>by: {{ comment.poster.username }}</p>
+                                                {% if comment.get_reports_count > 0 %}
+                                                    <p><span
+                                                            style="background: red; color: white; border-radius: .25rem; padding: 0.2rem">reports: {{ comment.get_reports_count }}</span>
+                                                    </p>
+                                                {% else %}
+                                                    <p>reports: {{ comment.get_reports_count }}</p>
+                                                {% endif %}
+                                            </div>
+
+                                            {% if can_delete %}
+                                                <div class="card-footer">
+                                                    <form method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" id="comment_id" name="comment_id"
+                                                               value="{{ comment.id }}">
+
+                                                        <button class="border rounded btn-outline-primary px-3 py-2"
+                                                                type="submit" name="edit">Edit
+                                                        </button>
+                                                        <button class="border rounded btn-outline-danger px-3 py-2"
+                                                                type="submit" name="delete">Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer class="container-fluid bg-warning" style="height: 60px;">
+        <div class="container text-center p-1" style="max-width: 680px;">
+            <span class="text-muted"> made by </span>
+            <br>
+            <span class="text-muted"> Jonathan Harsono & Taro Anklam </span>
+        </div>
+    </footer>
+{% endblock %}

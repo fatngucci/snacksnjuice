@@ -1,0 +1,30 @@
+{% extends 'home.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="text-center container p-4">
+        <div class="display-3 my-2 text-center mb-5">Login</div>
+        <form class="my-auto" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="my-5">
+                <button class="border rounded btn-primary px-3 py-2" type="submit">Login</button>
+                or
+                <a href="{% url 'signup' %}">
+                    <button class="border rounded btn btn-outline-primary px-3 py-2 mb-1" type="button">Signup</button>
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer class="container-fluid bg-warning" style="height: 60px; position: fixed; bottom: 0">
+        <div class="container text-center p-1" style="max-width: 680px;">
+            <span class="text-muted"> made by </span>
+            <br>
+            <span class="text-muted"> Jonathan Harsono & Taro Anklam </span>
+        </div>
+    </footer>
+{% endblock %}
